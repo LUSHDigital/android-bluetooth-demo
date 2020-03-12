@@ -31,7 +31,7 @@ afterEvaluate {
            debug (MavenPublication) {
                groupId = 'com.lush.test'
                artifactId = 'bluetoothdemo'
-               version = '1.0'
+               version = '1.0-SNAPSHOT'
                artifact("$buildDir/outputs/apk/debug/bluetooth-demo-debug-1.0.apk")
            }
         }
@@ -39,7 +39,13 @@ afterEvaluate {
         repositories {
             maven {
                 name = 'testRepo'
-                url = 'file:///Users/mthanos/Temp/maven-test-repo'
+//                url = 'file:///Users/mthanos/Temp/maven-test-repo'
+		  url "https://artifacts.platformserviceaccount.com/repository/maven-snapshots/"
+	          credentials {
+		      username 'Nexus Maven repository username'
+	              password 'Nexus Maven repository password'
+		  }
+
             }
         }
     }
