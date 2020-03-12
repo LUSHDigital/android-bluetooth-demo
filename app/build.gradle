@@ -29,7 +29,7 @@ afterEvaluate {
     publishing {
         publications {
            debug (MavenPublication) {
-               groupId = 'uk.co.akm.demo.bluetooth'
+               groupId = 'com.lush.test'
                artifactId = 'bluetoothdemo'
                version = '1.0'
                artifact("$buildDir/outputs/apk/debug/bluetooth-demo-debug-1.0.apk")
