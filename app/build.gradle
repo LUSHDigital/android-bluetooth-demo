@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 29
@@ -19,6 +20,26 @@ android {
                 variant.outputs.all {
                     outputFileName = "bluetooth-demo-${variant.name}-${variant.versionName}.apk"
                 }
+            }
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+           debug (MavenPublication) {
+               groupId = 'uk.co.akm.demo.bluetooth'
+               artifactId = 'bluetoothdemo'
+               version = '1.0'
+               artifact("$buildDir/outputs/apk/debug/bluetooth-demo-debug-1.0.apk")
+           }
+        }
+
+        repositories {
+            maven {
+                name = 'testRepo'
+                url = 'file:///Users/mthanos/Temp/maven-test-repo'
             }
         }
     }
