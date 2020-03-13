@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'maven-publish'
 
+def app_version_code = 1
+def app_version = "1.0"
+def base_name = "bluetooth-demo"
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -8,8 +12,8 @@ android {
         applicationId "uk.co.akm.demo.bluetooth.bluetoothdemo"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode app_version_code
+        versionName "$app_version"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -18,7 +22,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             applicationVariants.all { variant ->
                 variant.outputs.all {
-                    outputFileName = "bluetooth-demo-${variant.name}-${variant.versionName}.apk"
+                    outputFileName = "${base_name}-${variant.name}-${variant.versionName}.apk"
                 }
             }
         }
@@ -28,24 +32,38 @@ android {
 afterEvaluate {
     publishing {
         publications {
-           debug (MavenPublication) {
+           debug(MavenPublication) {
                groupId = 'com.lush.test'
                artifactId = 'bluetoothdemo'
-               version = '1.0-SNAPSHOT'
-               artifact("$buildDir/outputs/apk/debug/bluetooth-demo-debug-1.0.apk")
+               version = "${app_version}-SNAPSHOT"
+               artifact("$buildDir/outputs/apk/debug/${base_name}-debug-${app_version}.apk")
            }
+
+            release(MavenPublication) {
+                groupId = 'com.lush.test'
+                artifactId = 'bluetoothdemo'
+                version = app_version
+                artifact("$buildDir/outputs/apk/debug/${base_name}-release-${app_version}.apk")
+            }
         }
 
         repositories {
             maven {
-                name = 'testRepo'
-//                url = 'file:///Users/mthanos/Temp/maven-test-repo'
-		  url "https://artifacts.platformserviceaccount.com/repository/maven-snapshots/"
-	          credentials {
-		      username 'Nexus Maven repository username'
-	              password 'Nexus Maven repository password'
-		  }
+                name = 'snapshotRepo'
+		        url "https://artifacts.platformserviceaccount.com/repository/maven-snapshots/"
+	                credentials {
+		            username "$lush_maven_user"
+                    password "$lush_maven_password"
+		        }
+            }
 
+            maven {
+                name = 'releaseRepo'
+                url "https://artifacts.platformserviceaccount.com/repository/maven-releases/"
+                credentials {
+                    username "$lush_maven_user"
+                    password "$lush_maven_password"
+                }
             }
         }
     }
