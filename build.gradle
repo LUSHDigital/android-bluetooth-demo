@@ -2,13 +2,6 @@
 
 buildscript {
     ext {
-        println(System.getenv("BITRISE_SOURCE_DIR"))
-        File localDir = file(".")
-        println(localDir.getAbsolutePath())
-        for (File f : localDir.listFiles()) {
-            println(f.getAbsolutePath())
-        }
-
         // Get the build properties
         File buildPropsFile = file("build.properties")
         if (buildPropsFile.exists()) {
