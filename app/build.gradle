@@ -43,7 +43,7 @@ afterEvaluate {
                 groupId = 'com.lush.test'
                 artifactId = 'bluetoothdemo'
                 version = app_version
-                artifact("$buildDir/outputs/apk/debug/${base_name}-release-${app_version}.apk")
+                artifact("$buildDir/outputs/apk/release/${base_name}-release-${app_version}.apk")
             }
         }
 
